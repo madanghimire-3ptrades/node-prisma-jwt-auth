@@ -1,21 +1,30 @@
 import swaggerJsDoc from "swagger-jsdoc";
 
-const options: swaggerJsDoc.Options = {
+const swaggerOptions = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "Node.js API with Prisma & JWT",
+      title: "Your API",
       version: "1.0.0",
-      description:
-        "API documentation for the Node.js project using Prisma and JWT.",
+      description: "API documentation with JWT authentication",
     },
-    servers: [
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+          description: "Enter JWT token here",
+        },
+      },
+    },
+    security: [
       {
-        url: "http://localhost:3000", // Update this to match your server's URL
+        bearerAuth: [],
       },
     ],
   },
-  apis: ["./src/routes/*.ts"], // Update with the correct path to your route files
+  apis: ["./src/routes/*.ts"], // Adjust path to match your project structure
 };
 
-export default swaggerJsDoc(options);
+export default swaggerJsDoc(swaggerOptions);
